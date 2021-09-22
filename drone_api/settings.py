@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drone_app',
+    'knox',         #validate and generate tokens
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,26 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "drone_app.CustomUser"  # Custom user model
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',      #permissions checked at the start of a view.
+    ),
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (             #authenticators used when accessing the request.user properties.
+        'knox.auth.TokenAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',
+                                'rest_framework.filters.SearchFilter',
+                                'rest_framework.filters.OrderingFilter',
+                                ],
+
+    'DEFAULT_PAGINATION_CLASS': "rest_framework.pagination.PageNumberPagination",
+    'PAGE_SIZE': 6
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

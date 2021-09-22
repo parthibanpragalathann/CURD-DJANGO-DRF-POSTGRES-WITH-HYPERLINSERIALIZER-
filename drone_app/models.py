@@ -1,6 +1,12 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import ugettext_lazy as _
 # Created DRONE models here.
+
+# Choose User Roles
+user_role_type = ((1, "level1"), (2, "level2"), (3, "level3"))   #Type of User Role.
+
+# Choose Gender
 gender_choice = [
     (1, "Male"),
     (2, "Female"),
@@ -13,6 +19,15 @@ participate_choice = [
     ("not participate", "Not Participate")
 ]
 
+
+class CustomUser(AbstractUser):                 #Authentication user model.
+    username = models.CharField(max_length=155)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    email = models.EmailField(_('email address'), unique=True)
+    user_role = models.IntegerField(choices=user_role_type)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'user_role']
 
 # Drone categories ( DroneCategory model)
 class DronesCategory(models.Model):

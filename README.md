@@ -8,7 +8,8 @@
 
 ## Installed Packages or Dependencies 
 
-````python pip install django, djangorestframework, psycopg2
+````python 
+pip install django, django-filter, django-rest-knox, djangorestframework, psycopg2
 ````
 
 ## Create django project and app
