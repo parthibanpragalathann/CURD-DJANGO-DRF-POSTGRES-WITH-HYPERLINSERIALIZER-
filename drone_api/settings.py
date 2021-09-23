@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drone_app',
-    'knox',         #validate and generate tokens
+    'knox',                             #validate and generate tokens (Not Use)
+    'rest_framework_simplejwt',         #validate and generate tokens
     'django_filters',
 ]
 
@@ -83,10 +84,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',      #permissions checked at the start of a view.
     ),
-
-    'DEFAULT_AUTHENTICATION_CLASSES': (             #authenticators used when accessing the request.user properties.
-        'knox.auth.TokenAuthentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',
                                 'rest_framework.filters.SearchFilter',
                                 'rest_framework.filters.OrderingFilter',

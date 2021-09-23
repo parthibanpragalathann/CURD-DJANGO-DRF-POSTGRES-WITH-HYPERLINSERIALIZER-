@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import ugettext_lazy as _
+from .managers import CustomUserManager
+
+
+
 # Created DRONE models here.
 
 # Choose User Roles
@@ -21,13 +28,21 @@ participate_choice = [
 
 
 class CustomUser(AbstractUser):                 #Authentication user model.
-    username = models.CharField(max_length=155)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    email = models.EmailField(_('email address'), unique=True)
-    user_role = models.IntegerField(choices=user_role_type)
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'user_role']
+        username = models.CharField(max_length=150)
+        password = models.CharField(max_length=150)
+        password2 = models.CharField(max_length=150)
+        email = models.EmailField(_('email address'), unique=True)
+        first_name = models.CharField(max_length=150)
+        last_name = models.CharField(max_length=150)
+
+        USERNAME_FIELD = 'email'
+        REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
+        objects = CustomUserManager()
+
+        def __str__(self):
+            return self.email
+
 
 # Drone categories ( DroneCategory model)
 class DronesCategory(models.Model):
